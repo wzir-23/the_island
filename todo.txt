@@ -1,0 +1,4 @@
+* add edge cases for tests
+* refine map
+* place town, temple
+* get rid of key buffering
