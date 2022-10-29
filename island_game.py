@@ -59,6 +59,7 @@ def main(win):
 
 
 def update_game(key, game_data):
+    """ update game with user input """
     win = game_data.get_win()
     creatures = game_data.get_creatures()
     player = creatures[0]
@@ -85,6 +86,7 @@ def update_game(key, game_data):
 
 
 def render_all(game_data):
+    """ draw map elements and monster positions """
     src.maps.mem2map(game_data)
     src.maps.update_creatures(game_data)
     game_data.refresh()

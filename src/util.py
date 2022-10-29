@@ -1,10 +1,8 @@
 """ Helper functions for The Island """
 
-import errno
 import logging
 import os
 import random
-from time import sleep
 import src.maps
 
 

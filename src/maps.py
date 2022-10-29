@@ -1,32 +1,29 @@
 """ Map functions for The Island """
 
-import errno
 import logging
-import os
-import random
 from time import sleep
 import src.item
 
 
 def update_creatures(game_data):
+    """ update creature positions on map """
     creatures = game_data.get_creatures()
     win = game_data.get_win()
     for creature in creatures:
-        ypos, xpos = creature.get_pos()
-        logging.debug("creature.char=%s, y=%d, x=%d" % (creature.get_char(),
-                                                        ypos, xpos))
-        win.addstr(ypos, xpos, creature.get_char())
+        logging.debug("flurmp creature.char=%s", creature.get_name())
+        y_pos, x_pos = creature.get_pos()
+        creature_char = creature.get_char()
+        logging.debug("creature.char=%s, y=%d, x=%d",
+                      creature, y_pos, x_pos)
+        win.addstr(y_pos, x_pos, creature_char)
 
 
-def is_accessible(y, x, mem_map):
-    """ returns booelan describing accessible area """
+def is_accessible(y_pos, x_pos, mem_map):
+    """ return True/False if area is accessible """
     walkable = ['.', '#', '^', 'O', 'T']
-    if y > 24 or x > 79:   # Boundary check
+    if y_pos > 24 or x_pos > 79:   # Boundary check
         return False
-    if mem_map[y][x].get() in walkable:
-        return True
-    else:
-        return False
+    return mem_map[y_pos][x_pos].get() in walkable
 
 
 def init_mem_map():
@@ -40,8 +37,8 @@ def load_map(part, game_data):
     """ Load specified map from file to memory """
     logging.debug("load_map")
     mem_map = game_data.get_mem_map()
-    delimiter = "%d:island==========" % part
-    with open("assets/map.txt") as f:
+    delimiter = f"{part}:island=========="
+    with open("assets/map.txt", encoding='UTF-8') as f:
         matched = False
         y_pos = 0
         for line in f:
@@ -56,9 +53,11 @@ def load_map(part, game_data):
                 column = list(line)
                 logging.debug('len(column) = %d', len(column))
                 logging.debug('->%s<-', column)
-                for x_pos in range(len(column)):
+                # for x_pos in range(len(column)):
+                for x_pos, character in enumerate(column):
                     logging.debug('y = %d, x = %d', y_pos, x_pos)
-                    mem_map[y_pos][x_pos].set(column[x_pos])
+                    # mem_map[y_pos][x_pos].set(column[x_pos])
+                    mem_map[y_pos][x_pos].set(character)
                 y_pos += 1
                 if y_pos > 25:
                     matched = False
@@ -71,10 +70,10 @@ def mem2map(game_data):
     logging.debug("mem2map")
     mem_map = game_data.get_mem_map()
     win = game_data.get_win()
-    for y in range(25):
-        for x in range(80):
+    for y_pos in range(25):
+        for x_pos in range(80):
             # logging.debug("%d:%d" % (x, y))
-            win.addch(y, x, mem_map[y][x].get())
+            win.addch(y_pos, x_pos, mem_map[y_pos][x_pos].get())
     win.refresh()
 
 

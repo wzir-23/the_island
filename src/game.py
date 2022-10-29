@@ -1,7 +1,10 @@
+""" general game classes and functions """
+
 import logging
 
 
 class Game():
+    """ Class containing all game data """
     def __init__(self):
         self.mem_map = []
         self.win = False

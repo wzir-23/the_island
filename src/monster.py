@@ -1,4 +1,6 @@
+""" Monster and player functions and classes """
 import src.util
+
 
 class Creature():
     """ A generic monster/hero class """
@@ -9,24 +11,29 @@ class Creature():
         self.char = char
         self.player = False
     def get_char(self):
+        """ return character representation """
         return self.char
     def set_ypos(self, ypos):
+        """ update y position """
         self.ypos = ypos
     def set_xpos(self, xpos):
+        """ update x position """
         self.xpos = xpos
     def get_ypos(self):
+        """ get current y position """
         return self.ypos
     def get_xpos(self):
+        """ get current x position """
         return self.xpos
     def get_pos(self):
+        """ get current coordinates """
         return (self.ypos, self.xpos)
     def set_name(self, name):
+        """ update name """
         self.name = name
     def get_name(self):
+        """ get name """
         return self.name
-    # def move(self, x, y):
-        # if not occupied mem_map[y][x]
-        # continue
 
 
 def init_player(game_data):
